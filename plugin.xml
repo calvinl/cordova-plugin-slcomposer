@@ -15,7 +15,7 @@
   <!-- ios -->
   <platform name="ios">
     <config-file target="config.xml" parent="/*">
-      <feature name="Pusnotification">
+      <feature name="PushNotification">
         <param name="ios-package" value="PushNotification" />
       </feature>
     </config-file>
