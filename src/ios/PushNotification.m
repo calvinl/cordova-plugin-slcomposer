@@ -10,7 +10,6 @@
 #import "PushNotification.h"
 //#import <Cordova/JSONKit.h>
 #import <Cordova/CDVDebug.h>
-#import "OpenUDID.h"
 
 @implementation PushNotification
 
@@ -238,12 +237,6 @@
     if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
         // IOS 6 new Unique Identifier implementation
         uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    } else {
-        // Before iOS6 you shoud use a custom implementation for uuid
-        // Here I use OpenUDID (you have to import it into your project)
-        // https://github.com/ylechelle/OpenUDID
-        uuid = [OpenUDID value];
-        
     }
     
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:uuid];
