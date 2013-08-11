@@ -9,7 +9,7 @@
   <description>Enables Push Notifications for iOS based Cordova apps.</description>
 
   <js-module src="www/push-notification.js" name="PushNotification">
-      <clobbers target="navigator.pushNotification" />
+    <clobbers target="plugins.pushNotification" />
   </js-module>
 
   <!-- ios -->
