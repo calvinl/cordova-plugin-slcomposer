@@ -23,13 +23,14 @@
 }
 
 - (void)compose:(CDVInvokedUrlCommand*)command {
-    NSLog(@"showComposer:%@", command.arguments);
+    NSLog(@"compose:%@", command.arguments);
     
-    [self.callbackIds setValue:command.callbackId forKey:@"composeTweet"];
+    [self.callbackIds setValue:command.callbackId forKey:@"compose"];
     
     NSDictionary *options = [command.arguments objectAtIndex:0];
     NSString *body = [options objectForKey:@"body"];
     NSString *type = [options objectForKey:@"type"];
+    NSString *url  = [options objectForKey:@"url"];
 
 
     NSString *serviceType = SLServiceTypeFacebook;
@@ -43,30 +44,39 @@
 
    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
 
-        SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+        SLComposeViewController *composerSheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
 
-        [mySLComposerSheet setInitialText:body];
+        [composerSheet setInitialText:body];
 
-        //[mySLComposerSheet addImage:[UIImage imageNamed:@"myImage.png"]];
-        [mySLComposerSheet addURL:[NSURL URLWithString:@"http://wunwun.com"]];
+        //[composerSheet addImage:[UIImage imageNamed:@"myImage.png"]];
+        if (url) {
+            [composerSheet addURL:[NSURL URLWithString:url]];
+        }
 
-        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
 
-             switch (result) {
-                 case SLComposeViewControllerResultCancelled:
-                     NSLog(@"Post Canceled");
-                     break;
-                 case SLComposeViewControllerResultDone:
-                     NSLog(@"Post Sucessful");
-                     break;
+        [composerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
 
-                 default:
-                     break;
+            NSString *status = SLComposeViewControllerResultCancelled;
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    status = @"cancelled";
+                    break;
+                case SLComposeViewControllerResultDone:
+                    status = @"done";
+                    break;
+
+                default:
+                    break;
              }
-         }];
 
-        //[self presentViewController:mySLComposerSheet animated:YES completion:nil];
-        [self.viewController presentModalViewController:mySLComposerSheet animated:YES];
+            NSDictionary *results = [NSDictionary dictionaryWithObject:status forKey:@"result"];
+
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:results];
+	          [self writeJavascript:[pluginResult toSuccessCallbackString:[self.callbackIds valueForKey:@"compose"]]];
+
+        }];
+
+        [self.viewController presentViewController:composerSheet animated:YES];
     }
           
 }
