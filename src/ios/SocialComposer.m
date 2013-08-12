@@ -41,7 +41,7 @@
         serviceType = SLServiceTypeTwitter;
     }
 
-   if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
+    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
 
         SLComposeViewController *composerSheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
         [composerSheet setInitialText:body];
@@ -49,7 +49,7 @@
         if (imageUrl) {
             [composerSheet addImage:[UIImage imageNamed:imageUrl]];
         } else {
-            [composerSheet addImage:[UIImage imageNamed:@"icon.png"]];
+            [composerSheet addImage:nil];
         }
         if (url) {
             [composerSheet addURL:[NSURL URLWithString:url]];
