@@ -32,8 +32,6 @@
     NSString *type = [options objectForKey:@"type"];
     NSString *url  = [options objectForKey:@"url"];
     NSString *imageUrl = [options objectForKey:@"imageUrl"];
-
-
     NSString *serviceType = SLServiceTypeFacebook;
 
     if ([type isEqual:@"facebook"]) {
@@ -51,7 +49,7 @@
         if (imageUrl) {
             [composerSheet addImage:[UIImage imageNamed:imageUrl]];
         } else {
-            [composerSheet addImage:nil];
+            [composerSheet addImage:[UIImage imageNamed:@"icon.png"]];
         }
         if (url) {
             [composerSheet addURL:[NSURL URLWithString:url]];
