@@ -32,12 +32,12 @@
     NSString *type = [options objectForKey:@"type"];
 
 
-    SLServiceType serviceType = SLServiceTypeFacebook;
+    NSString *serviceType = SLServiceTypeFacebook;
 
-    if (type == 'facebook') {
+    if (type == @"facebook") {
         serviceType = SLServiceTypeFacebook;
     }
-    if (type == 'twitter') {
+    if (type == @"twitter") {
         serviceType = SLServiceTypeTwitter;
     }
 
