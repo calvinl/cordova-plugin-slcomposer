@@ -12,8 +12,8 @@ var SocialComposer = function() {
 };
 
 // Call this to register for push notifications and retreive a deviceToken
-SocialComposer.prototype.composeTweet = function(options, callback) {
-  cordova.exec(callback, callback, "SocialComposer", "composeTweet", config ? [config] : []);
+SocialComposer.prototype.compose = function(options, callback) {
+  cordova.exec(callback, callback, "SocialComposer", "compose", config ? [config] : []);
 };
 
 var socialComposer = new SocialComposer();

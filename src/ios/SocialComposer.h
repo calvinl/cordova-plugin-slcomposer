@@ -22,6 +22,6 @@
 //@property (nonatomic, retain) NSString *phoneNumber;
 //@property (nonatomic, retain) NSString *messageText;
 
-- (void)composeTweet:(CDVInvokedUrlCommand*)command;
+- (void)compose:(CDVInvokedUrlCommand*)command;
 
 @end

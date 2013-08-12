@@ -22,17 +22,28 @@
 	return _callbackIds;
 }
 
-- (void)composeTweet:(CDVInvokedUrlCommand*)command {
+- (void)compose:(CDVInvokedUrlCommand*)command {
     NSLog(@"showComposer:%@", command.arguments);
     
     [self.callbackIds setValue:command.callbackId forKey:@"composeTweet"];
     
     NSDictionary *options = [command.arguments objectAtIndex:0];
     NSString *body = [options objectForKey:@"body"];
+    NSString *type = [options objectForKey:@"type"];
 
-   if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
 
-        SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    SLServiceType serviceType = SLServiceTypeFacebook;
+
+    if (type == 'facebook') {
+        serviceType = SLServiceTypeFacebook;
+    }
+    if (type == 'twitter') {
+        serviceType = SLServiceTypeTwitter;
+    }
+
+   if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
+
+        SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
 
         [mySLComposerSheet setInitialText:body];
 
