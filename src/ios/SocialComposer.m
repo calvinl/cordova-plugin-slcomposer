@@ -31,6 +31,7 @@
     NSString *body = [options objectForKey:@"body"];
     NSString *type = [options objectForKey:@"type"];
     NSString *url  = [options objectForKey:@"url"];
+    NSString *imageUrl = [options objectForKey:@"imageUrl"];
 
 
     NSString *serviceType = SLServiceTypeFacebook;
@@ -38,21 +39,23 @@
     if ([type isEqual:@"facebook"]) {
         serviceType = SLServiceTypeFacebook;
     }
-    if ([type isEqual: @"twitter"]) {
+    if ([type isEqual:@"twitter"]) {
         serviceType = SLServiceTypeTwitter;
     }
 
    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
 
         SLComposeViewController *composerSheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
-
         [composerSheet setInitialText:body];
 
-        //[composerSheet addImage:[UIImage imageNamed:@"myImage.png"]];
+        if (imageUrl) {
+            [composerSheet addImage:[UIImage imageNamed:imageUrl]];
+        } else {
+            [composerSheet addImage:nil];
+        }
         if (url) {
             [composerSheet addURL:[NSURL URLWithString:url]];
         }
-
 
         [composerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
 
@@ -74,9 +77,11 @@
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:results];
 	          [self writeJavascript:[pluginResult toSuccessCallbackString:[self.callbackIds valueForKey:@"compose"]]];
 
+            [self.viewController dismissViewControllerAnimated:YES completion:nil];
+
         }];
 
-        [self.viewController presentViewController:composerSheet animated:YES];
+        [self.viewController presentViewController:composerSheet animated:YES completion:nil];
     }
           
 }
