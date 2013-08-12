@@ -34,10 +34,10 @@
 
     NSString *serviceType = SLServiceTypeFacebook;
 
-    if (type == @"facebook") {
+    if ([type isEqual:@"facebook"]) {
         serviceType = SLServiceTypeFacebook;
     }
-    if (type == @"twitter") {
+    if ([type isEqual: @"twitter"]) {
         serviceType = SLServiceTypeTwitter;
     }
 
