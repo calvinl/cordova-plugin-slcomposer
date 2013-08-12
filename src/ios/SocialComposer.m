@@ -56,7 +56,7 @@
 
         [composerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
 
-            NSString *status = SLComposeViewControllerResultCancelled;
+            NSString *status = @"cancelled";
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
                     status = @"cancelled";
